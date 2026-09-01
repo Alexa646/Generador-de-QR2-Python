@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Generador-de-QR2-Python.iml" filepath="$PROJECT_DIR$/.idea/Generador-de-QR2-Python.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/CifradorDeQR.iml" filepath="$PROJECT_DIR$/.idea/CifradorDeQR.iml" />
     </modules>
   </component>
 </project>
