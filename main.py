@@ -123,6 +123,21 @@ def menu_terminal():
         else:
             print("\n⚠ Opción no válida. Ingresa un número del 1 al 5.")
 
+#CAMBIOS DE FERNANDO
+#Convertidor de Strings a ASCII
+def conseguir_valor_ascii(texto: str):
+    ascii_array = [ord(char) for char in texto] #Guardar los valores ASCII en un array
+
+    return (ascii_array)
+
+#Convertidor de string a su valor en binario
+def conseguir_valor_bin(texto: str):
+
+    #Esta manera es mas directa y asegura convertir los caracteres en su version en binario
+    #De manera que si juntas el array en binario entero te da el texto original
+    binary_array =  [format(ord(char), "08b") for char in texto]
+    return binary_array
+
 
 if __name__ == "__main__":
     menu_terminal()
