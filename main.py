@@ -66,6 +66,12 @@ def convertidor_Caracter(texto: str):
         "BIN": vector_bin,
         "CADENA_BIN": "".join(vector_bin)
     }
+#Vector a cuadro
+def convertir_cadena_a_cuadros(cadena_binaria: str) -> str:
+    """
+    Convierte una cadena binaria reemplazando '0' por '■' y '1' por '□'.
+    """
+    return cadena_binaria.replace('0', '□').replace('1', '■')
 
 def menu_terminal():
     texto = "QR-2026"
@@ -80,7 +86,8 @@ def menu_terminal():
         print("2. Validar texto (Norma Alfanumérica QR)")
         print("3. Convertir texto a vectores (DEC, HEX, BIN)")
         print("4. Ejecutar validación y conversión completas")
-        print("5. Salir")
+        print("5. Convertir texto a vectores (DEC, HEX, BIN)")
+        print("6. Salir")
         print("=" * 42)
 
         opcion = input("Selecciona una opción (1-5): ").strip()
@@ -116,8 +123,12 @@ def menu_terminal():
             else:
                 print("Estatus: NO PERMITIDO ")
                 print("El texto incluye caracteres no compatibles con el diccionario.")
-
         elif opcion == "5":
+            # Ejemplo al imprimir el resultado:
+            resultado = convertidor_Caracter(texto)
+            print(f"Cadena Binaria Unida  : {resultado['CADENA_BIN']}")
+            print(f"Representación Visual : {convertir_cadena_a_cuadros(resultado['CADENA_BIN'])}")
+        elif opcion == "6":
             print("\nSaliendo del programa...")
             break
         else:
