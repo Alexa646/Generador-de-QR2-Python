@@ -51,8 +51,11 @@ DiccionarioBIN = {
 
 #Validar caracteres permitidos por la norma QR
 def validar_caracteres_qr(texto: str) -> bool:
-    permitidos = set("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:")
-    return all(caracter in permitidos for caracter in texto.upper())
+    permitidos = set(
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz $%*+-./:"
+    )
+    return all(caracter in permitidos for caracter in texto)
+
 
 #Convertidor de caractertes
 def convertidor_Caracter(texto: str):
@@ -66,9 +69,15 @@ def convertidor_Caracter(texto: str):
         "BIN": vector_bin,
         "CADENA_BIN": "".join(vector_bin)
     }
+#Vector a cuadro
+def convertir_cadena_a_cuadros(cadena_binaria: str) -> str:
+    """
+    Convierte una cadena binaria reemplazando '0' por '■' y '1' por '□'.
+    """
+    return cadena_binaria.replace('0', '□').replace('1', '■')
 
 def menu_terminal():
-    texto = "QR-2026"
+    texto = "Convertidor QR"
 
     while True:
         print("\n" + "=" * 42)
@@ -80,7 +89,8 @@ def menu_terminal():
         print("2. Validar texto (Norma Alfanumérica QR)")
         print("3. Convertir texto a vectores (DEC, HEX, BIN)")
         print("4. Ejecutar validación y conversión completas")
-        print("5. Salir")
+        print("5. Convertir texto a vectores (DEC, HEX, BIN)")
+        print("6. Salir")
         print("=" * 42)
 
         opcion = input("Selecciona una opción (1-5): ").strip()
@@ -97,12 +107,16 @@ def menu_terminal():
             print(f"Estatus: {estado}")
 
         elif opcion == "3":
-            resultado = convertidor_Caracter(texto)
-            print(f"\n[RESULTADO CONVERSIÓN: '{texto}']")
-            print(f"Vector Decimal (DEC)    : {resultado['DEC']}")
-            print(f"Vector Hexadecimal (HEX): {resultado['HEX']}")
-            print(f"Vector Binario (BIN)    : {resultado['BIN']}")
-            print(f"Cadena Binaria Unida    : {resultado['CADENA_BIN']}")
+            if validar_caracteres_qr(texto):
+                resultado = convertidor_Caracter(texto)
+
+                print(f"\n[RESULTADO CONVERSIÓN: '{texto}']")
+                print(f"Vector Decimal (DEC)    : {resultado['DEC']}")
+                print(f"Vector Hexadecimal (HEX): {resultado['HEX']}")
+                print(f"Vector Binario (BIN)    : {resultado['BIN']}")
+                print(f"Cadena Binaria Unida    : {resultado['CADENA_BIN']}")
+            else:
+                print("\nEl texto incluye caracteres no compatibles con el diccionario.")
 
         elif opcion == "4":
             print(f"\n[EVALUACIÓN INTEGRAL PARA: '{texto}']")
@@ -116,8 +130,18 @@ def menu_terminal():
             else:
                 print("Estatus: NO PERMITIDO ")
                 print("El texto incluye caracteres no compatibles con el diccionario.")
-
         elif opcion == "5":
+            if validar_caracteres_qr(texto):
+                resultado = convertidor_Caracter(texto)
+
+                print(f"\nCadena Binaria Unida : {resultado['CADENA_BIN']}")
+                print(
+                    f"Representación Visual : "
+                    f"{convertir_cadena_a_cuadros(resultado['CADENA_BIN'])}"
+                )
+            else:
+                 print("\nEl texto incluye caracteres no compatibles con el diccionario.")
+        elif opcion == "6":
             print("\nSaliendo del programa...")
             break
         else:
@@ -132,9 +156,6 @@ def conseguir_valor_ascii(texto: str):
 
 #Convertidor de string a su valor en binario
 def conseguir_valor_bin(texto: str):
-
-    #Esta manera es mas directa y asegura convertir los caracteres en su version en binario
-    #De manera que si juntas el array en binario entero te da el texto original
     binary_array =  [format(ord(char), "08b") for char in texto]
     return binary_array
 
